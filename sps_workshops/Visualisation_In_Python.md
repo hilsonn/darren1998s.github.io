@@ -172,7 +172,7 @@ plt.show()
 
 Let us compare with our base graph from earlier to the one we have now!
 
-![comparison_base_ggplot](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/scatterWithLabeland%20linreg.png)
+![comparison_baseSNS}](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/comparisonsns.png)
 
 Awesome! With one look, readers can tell exactly what they are looking at and what message you would want them to takeaway! In this case, as `Sepal Length` increases, `Petal Length` increases. 
 
