@@ -12,7 +12,7 @@ sort: 2
 # Importing relevant packages
 For this tutorial, we would need to import a few things.
 
-```Python
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -24,7 +24,7 @@ For the purposes of this tutorial, we are going to be using the _Iris_ flower da
 
 There are various ways of loading in the iris dataset in python, but let us load in our own csv file to simulate actually loading our own data from a csv file!
 
-```Python
+```python
 #I hosted the same dataset exported from R onto my github for easy access
 iris = pd.read_csv('https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/1e6564c4a3f501a980b0dc64f943457928b47d8a/iris.csv', index_col=None)
 ```
@@ -34,7 +34,7 @@ This dataset contains Sepal and Petal length / width of different Species of flo
 
 We can thus inspect the dataset like this:
 
-```R
+```python
 print(iris)
 ```
 
@@ -60,7 +60,7 @@ How handy! [This website](https://subscription.packtpub.com/book/big_data_and_bu
 ## Testing some variable
 Perhaps you have this dataset, you think `Sepal.Length` and `Petal.Width` are related in someway, we can visualise this quickly by using the `plt.plot()` function:
 
-```Python
+```python
 plt.plot(iris['Sepal.Length'],iris['Petal.Width'], '.')
 plt.show()
 ```
@@ -68,7 +68,7 @@ plt.show()
 
 Awesome! There seems to be some sort of association. What if we want to explore other combinations of our variables, such as `Sepal.Length` vs `Petal.Length` and so on and so forth? Luckily for us Python's `seaborn` has a function called `sns.pairplot()` to help us! 
 
-```R
+```python
 sns.pairplot(iris)
 plt.show()
 ``` 
@@ -85,7 +85,7 @@ Lets say we had a basic research question "Are the lengths of the petals associa
 
 After data collection, we can casually plot `Sepal.Length` against `Petal.Length` using `plt.plot()`.
 
-```Python
+```python
 plt.plot(iris['Sepal.Length'],iris['Petal.Length'], '.')
 plt.show()
 ```
@@ -101,7 +101,7 @@ We are going to make use of the various functions in `seaborn` to plot. So be su
 
 We already have our base syntax, where our x-axis is `Sepal.Length` and y-axis is `Petal.Length`.
 
-```Python
+```python
 sns.set_theme(style="darkgrid") #This just makes the graph dark and shiny
 sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris)
 plt.show()
@@ -119,7 +119,7 @@ Great, this is the exact same graph as above. Except this has **COLOUR**. There 
 ### Changing the label size & Naming of X- and Y-axis
 The first issue that is very obvious is that the labels on the x- and y-axis are very small and may not be readable by people. So let us change that using functions found in `matplotlib`:
 
-```Python
+```python
 sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris)
 plt.xlabel("Length of Sepal (cm)", fontsize = 20)
 plt.ylabel("Length of petal (cm)", fontsize = 20)
@@ -139,7 +139,7 @@ So to look at our checklist real quick
 
 Awesome, now with one look, readers can guess what the graph is about. But to make it even clearer, we will need to add a title to the graph:
 
-```Python
+```python
 sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
 plt.xlabel("Length of Sepal (cm)", fontsize = 20)
 plt.ylabel("Length of petal (cm)", fontsize = 20)
@@ -160,7 +160,7 @@ Cool, our checklist is done!
 
 Ok we have a decent graph generated, but it does not really tell the reader anything. Linking back to our research question, we want to show that there is a linear association between length of petal and length of sepal of various _Iris_ flower species. The easiest way we can do this is by adding a best-fit linear regression line!
 
-```Python
+```python
 sns.regplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
 plt.xlabel("Length of Sepal (cm)", fontsize = 20)
 plt.ylabel("Length of petal (cm)", fontsize = 20)
@@ -201,7 +201,7 @@ We are going to use the `plt.subplots()` function to define our figure size (if 
 
 The `fig.suptitle()` allows us to define the biggest title for these graphs while `.set(title='')` allows us to define the title for each graph!
 
-```Python
+```python
 #Plotting these two boxplots together in 1 graph
 fig, ax = plt.subplots(figsize=(10,12), nrows = 2, ncols = 2)
 ax1, ax2 = ax.ravel()
@@ -227,7 +227,7 @@ From two sections ago, we could see, on average across all species of _Iris_ flo
 So, you might be asking, how do we visualise this when we only have x- and y-axis on a graph? The secret lies in the **COLOR** or **SHAPE** of each data point!
 
 
-```Python
+```python
 #Grouping
 sns.lmplot(x = 'Sepal.Length',y = 'Petal.Length', hue = 'Species', aspect = 1.5, data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
 plt.xlabel("Length of Sepal (cm)", fontsize = 20)
