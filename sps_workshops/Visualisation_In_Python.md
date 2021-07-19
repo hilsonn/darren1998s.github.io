@@ -2,21 +2,31 @@
 sort: 2
 ---
 
-# Visualisation of Data using R
-**Author**: [Darren Teo](https://www.linkedin.com/in/darren-teo-3125871a1/)
+# Visualisation of Data using Python
+**Authors**: [Darren Teo](https://www.linkedin.com/in/darren-teo-3125871a1/), [Ervin Chia](https://www.linkedin.com/in/ervin-chia-194080214/)
 
-**About the Author**: Year 3 student in NUS in Special Programme in Science
+**About the Authors**: Year 3 student in NUS in Special Programme in Science, Darren and Ervin are currently majoring in Life Sciences and Physics respectively.
 
-**About this tutorial**: Just a small little worked example of what one can do to visualise data so people can apply it to their reports / papers / presentations etc. This is by no means an exhaustive list and I am sure there are better ways to go about doing it :))
+**About this tutorial**: This is essentially the same example of the R tutorial but repurposed to make use of Python, the `seaborn` and `matplotlib` package.
+
+# Importing relevant packages
+For this tutorial, we would need to import a few things.
+
+```Python
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
 
 # Loading in iris dataset
 
 For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper _The use of multiple measurements in taxonomic problems_.
 
-We can try loading in this built-in dataset in R. Like so:
+There are various ways of loading in the iris dataset in python, but let us load in our own csv file to simulate actually loading our own data from a csv file!
 
-```R
-data("iris")
+```Python
+#I hosted the same dataset exported from R onto my github for easy access
+iris = pd.read_csv('https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/1e6564c4a3f501a980b0dc64f943457928b47d8a/iris.csv', index_col=None)
 ```
 
 ## Inspecting the dataset
@@ -25,7 +35,7 @@ This dataset contains Sepal and Petal length / width of different Species of flo
 We can thus inspect the dataset like this:
 
 ```R
-head(iris)
+print(iris)
 ```
 
 |  | Sepal.Length  | Sepal.Width  | Petal.Length  | Petal.Width  | Species  |
@@ -48,17 +58,19 @@ The dataset numbers are all in centimeters (cm), and the different variables sho
 How handy! [This website](https://subscription.packtpub.com/book/big_data_and_business_intelligence/9781789539462/3/ch03lvl1sec17/text-classification) contains an image on what Sepal / Petal length and widths mean for each row!
 
 ## Testing some variable
-Perhaps you have this dataset, you think `Sepal.Length` and `Petal.Width` are related in someway, we can visualise this quickly by using the `plot()` function:
+Perhaps you have this dataset, you think `Sepal.Length` and `Petal.Width` are related in someway, we can visualise this quickly by using the `plt.plot()` function:
 
-```R
-plot(iris$Sepal.Length, iris$Petal.Width)
+```Python
+plt.plot(iris['Sepal.Length'],iris['Petal.Width'], '.')
+plt.show()
 ```
 ![SLvsPw](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/irisSepalvsPetal.jpg)
 
-Awesome! There seems to be some sort of association. What if we want to explore other combinations of our variables, such as `Sepal.Length` vs `Petal.Length` and so on and so forth? Luckily for us R has a function called `pairs()` to help us! By adding `panel = panel.smooth`, R would help us generate a "smooth" curve to help us better visualise correlations!
+Awesome! There seems to be some sort of association. What if we want to explore other combinations of our variables, such as `Sepal.Length` vs `Petal.Length` and so on and so forth? Luckily for us Python's `seaborn` has a function called `sns.pairplot()` to help us! 
 
 ```R
-pairs(iris, panel = panel.smooth)
+sns.pairplot(iris)
+plt.show()
 ``` 
 ![irisPairsPlot](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/pairsiris.jpg)
 
@@ -71,7 +83,12 @@ Before we proceed any further, it is important in any experiment that we have a 
 
 Lets say we had a basic research question "Are the lengths of the petals associated with the lengths of sepal in _I. setosa_, _I. versicolor_, and _ I. virginica_?" So while we're doing data collection, we collected other variables as well (see table above).
 
-After data collection, we can casually plot `Sepal.Length` against `Petal.Length`.
+After data collection, we can casually plot `Sepal.Length` against `Petal.Length` using `plt.plot()`.
+
+```Python
+plt.plot(iris['Sepal.Length'],iris['Petal.Length'], '.')
+plt.show()
+```
 ![SLvsPL](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/irisSepalLvsPetalL.jpg)
 
 It seems to me that Petal Length and Sepal Length have a linear positive correlation with each other!
@@ -80,133 +97,59 @@ It seems to me that Petal Length and Sepal Length have a linear positive correla
 
 If you were Ronald Fisher and wanted to present about the positive correlation of Sepal Length with Petal Length by using the graph presented above, you will probably not succeed in getting your point across.
 
-Luckily, since most of the R community have agreed that base R plotting is terrible for presentations. A very handy package called `ggplot2` was created.
+We are going to make use of the various functions in `seaborn` to plot. So be sure to check closely! 
 
-If you have not installed `ggplot2` in R, you can install it using the following command then load it in.
+We already have our base syntax, where our x-axis is `Sepal.Length` and y-axis is `Petal.Length`.
 
-```R
-install.packages("ggplot2") #This is only if you have not installed it before
-library(ggplot2)
-```
-
-The cool thing about `ggplot2` is that it allows for a very "modular" way of adding to the graph. We first specify the dataframe in which ggplot should look in, in our case `iris`, followed by the "global" aesthetics layer using `aes()`.
-
-We want our x-axis to be `Sepal.Length` and y-axis to be `Petal.Length`
-
-So our base syntax for our example would look like this:
-
-```R
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length))
-
-#To view the graph you can just run
-iris_PetalLengthvsSepalLength
-```
-
-![blankggplot](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/Blankggplot2.jpg)
-
-As you can tell, the plot is blank! This is because we only told `ggplot` to initialise a blank canvas, the next thing we want `ggplot` to do is to add our points! We can do this by using this `geom_point()`:
-
-```R
-#There are two ways to do this. The first way is 
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point()
-
-#The second way is, assuming you already defined the variable of iris_PetalLengthvsSepalLength before,
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + geom_point()
-
-#Like always lets view iris_PetalLengthvsSepalLength
-iris_PetalLengthvsSepalLength
+```Python
+sns.set_theme(style="darkgrid") #This just makes the graph dark and shiny
+sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris)
+plt.show()
 ```
 ![geompointExample](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PetalLengthvsSepalLength.jpg)
 
 
-Great, this is the exact same graph as above. Except this has **COLOUR**. There are a few things we can do to make this graph look more presentable. For your information, `geom_point()` can take an additional argument to change the shape and size of your dots if they ever look too small! You can experiment with it yourself, it'll look something like this `geom_point(size = 5, shape = 21)`
+Great, this is the exact same graph as above. Except this has **COLOUR**. There are a few things we can do to make this graph look more presentable.
 
 - [ ] Label size for the numbers
 - [ ] Naming of X- and Y-axis
 - [ ] Title / subtitle
 
 
-### Changing the label size
-The first issue that is very obvious is that the labels on the x- and y-axis are very small and may not be readable by people. So let us change that using `theme()`:
+### Changing the label size & Naming of X- and Y-axis
+The first issue that is very obvious is that the labels on the x- and y-axis are very small and may not be readable by people. So let us change that using functions found in `matplotlib`:
 
-```R
-#Once again, there are two ways of doing this, you can either build the graph in 1 go 
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25))
-
-
-
-#Or make it modular
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + theme() +  theme(axis.text=element_text(size=20))
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + theme(axis.title=element_text(size=25))
-
-#Like always lets view iris_PetalLengthvsSepalLength
-iris_PetalLengthvsSepalLength
+```Python
+sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris)
+plt.xlabel("Length of Sepal (cm)", fontsize = 20)
+plt.ylabel("Length of petal (cm)", fontsize = 20)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
+plt.show()
 ```
 ![Change_Label_Size](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/PLvsSLChangeSize.jpg)
 
 
-`theme(axis.text=element_text(size=20))` changes the numbers on the x- and y-axis whereas `theme(axis.title=element_text(size=25))` changes the size of the x- and y-axis labels!
+`plt.xticks(fontsize = 15)` and `plt.yticks(fontsize = 15)` changes the numbers on the x- and y-axis whereas `plt.xlabel("Length of Sepal (cm)", fontsize = 20)` and `plt.ylabel("Length of petal (cm)", fontsize = 20)` changes the size and name of the x- and y-axis labels!
 
 So to look at our checklist real quick
 - [x] Label size for the numbers
-- [ ] Naming of X- and Y-axis
+- [x] Naming of X- and Y-axis
 - [ ] Title / subtitle
 
+Awesome, now with one look, readers can guess what the graph is about. But to make it even clearer, we will need to add a title to the graph:
 
-### Naming of X- and Y-axis & Title / subtitle
-Luckily for us, since the dataframe is named appropriately, most readers would know the x- and y-axis are representing Sepal and Petal length. **BUT**, readers would not know the units. It is often good practice to rename your axis to be readable by everyone.
-
-Lets rename the axis so that they portray the right information from the get go.
-```R
-#You can either do this
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25)) +
-                                xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)')
-
-#or do this if you already have iris_PetalLengthvsSepalLength defined earlier.
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)')
-
-#Like always lets view iris_PetalLengthvsSepalLength
-iris_PetalLengthvsSepalLength
-```
-![Renamed_Axis_include_units](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PetalLengthvsSepalLengthAxisLabels.jpg)
-
-Awesome, now with one look, readers can guess what the graph is about. But to make it even clearer, we will need to add a title or a subtitle to the graph:
-
-```R
-#Because Iris is the genus, when typing it, they need to be italicised this code snippet below will give you an example.
-subtitle_iris = expression(paste("of various ",italic("Iris "), 'flower species'))
-
-#Once again, you can do this 
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25)) +
-                                xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)') + 
-                                labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris) +
-                                theme(plot.title  = element_text(size=30)) +
-                                theme(plot.subtitle  = element_text(size=20))
-
-
-#Or do this to add on
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris)
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + theme(plot.title  = element_text(size=30))
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + theme(plot.subtitle  = element_text(size=20))
-
-#Like always lets view iris_PetalLengthvsSepalLength
-iris_PetalLengthvsSepalLength
+```Python
+sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
+plt.xlabel("Length of Sepal (cm)", fontsize = 20)
+plt.ylabel("Length of petal (cm)", fontsize = 20)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
+plt.show()
 ```
 ![Added_TitlenSubtitle](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLvsSLTitle.jpg)
 
-
-> Editor note: I had to increase the size of the graph here while saving so I changed the size of the points by using the command `geom_point(size = 4)`
-
+The code snippet `.set(title='Length of Petals (cm) vs Length of Sepals (cm))` allows each individual graph to have their own titles! and the snippet `\nof various $\it{Iris}$ flowers'` allows for a new line, and in that new line, italacise the word _Iris_ using `$\it{Iris}$`.
 
 Cool, our checklist is done!
 - [x] Label size for the numbers
@@ -217,29 +160,13 @@ Cool, our checklist is done!
 
 Ok we have a decent graph generated, but it does not really tell the reader anything. Linking back to our research question, we want to show that there is a linear association between length of petal and length of sepal of various _Iris_ flower species. The easiest way we can do this is by adding a best-fit linear regression line!
 
-```R
-#Once again, you can do this 
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25)) +
-                                xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)') + 
-                                labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris) +
-                                theme(plot.title  = element_text(size=30)) +
-                                theme(plot.subtitle  = element_text(size=20)) +
-                                stat_smooth(method='lm')
-
-#Or do this to add on
-iris_PetalLengthvsSepalLength = iris_PetalLengthvsSepalLength + stat_smooth(method='lm')
-
-
-#Like always lets view iris_PetalLengthvsSepalLength
-iris_PetalLengthvsSepalLength
-
-#The dark grey borders around the blue linear line indicates the confidence interval for each point on that line.
-#If you would like to remove, you can use this function call
-#stat_smooth(method='lm', se = FALSE) instead of stat_smooth(method='lm')
-#the method = 'lm' here specifies which model to fit the data with!
+```Python
+sns.regplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
+plt.xlabel("Length of Sepal (cm)", fontsize = 20)
+plt.ylabel("Length of petal (cm)", fontsize = 20)
+plt.xticks(fontsize = 15)
+plt.yticks(fontsize = 15)
+plt.show()
 ```
 ![Added_stat_smooth_line](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLvsSLLMline.jpg)
 
@@ -249,73 +176,43 @@ Let us compare with our base graph from earlier to the one we have now!
 
 Awesome! With one look, readers can tell exactly what they are looking at and what message you would want them to takeaway! In this case, as `Sepal Length` increases, `Petal Length` increases. 
 
-#### Additional info
-
-In the event that you have other ways you would like to fit your data (since not all data are linearly associated), you can still fit your data after generating a model. In this example, I have generated a linear regression model, but it can be any type of model and it'll still work!
-
-```R
-#Generating the simplest linear regression model
-iris_lm = lm(Petal.Length ~ Sepal.Length, data = iris)
-summary(iris_lm)
-
-#Generating datapoints and putting them in the same dataframe as iris for accessibility
-iris.predict = cbind(iris, predict(iris_lm, interval = 'confidence'))
-iris_withlm = ggplot(iris.predict, aes(x=Sepal.Length, y = Petal.Length))+
-              geom_point(size = 4) + 
-              geom_line(aes(Sepal.Length, fit),color="blue", size = 1.5) + theme() +
-              theme(axis.text=element_text(size=20)) + 
-              theme(axis.title=element_text(size=25)) +
-              xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)') + 
-              labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris) +
-              theme(plot.title  = element_text(size=30)) +
-              theme(plot.subtitle  = element_text(size=20)) 
-
-iris_withlm
-```
-
 ## Visualising Categorical Variables
 In the previous section, both variables shown are continuous variables. Meaning they could take any number. What if one of the variables is categorical, like `Species`?
 
-In the `pairs()` plot that is provided all the way to the top, you would notice that the `Species` of _Iris_ has some form of correlation with both `Sepal.Length` and `Petal.Length`.
+In the `sns.pairplot()` plot that is provided all the way to the top, you would notice that the `Species` of _Iris_ has some form of correlation with both `Sepal.Length` and `Petal.Length`.
 
 So, if our research question was to investigate the `Sepal.Length` and `Petal.Length` (continuous variable) between `Species` (categorical variables), we can modify some of our code from the previous section to work!
 
 One of the ways to visualise continous variables against categorical variables, is to use a boxplot.
 
-For the sake of simplicity of the tutorial, I would not be adding `theme()`.
+For the sake of simplicity of the tutorial, I would not be changing much of the aesthetics such as label size, label names, tile, etc.
 ```R
-#This was the previous code showing continous variable against another continuous variable
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() +
-                                stat_smooth(method='lm')
-
-iris_PetalvsSpecies = ggplot(iris, aes(x = Species, y = Petal.Length)) +
-                      geom_boxplot()
-
-iris_SepalvsSpecies = ggplot(iris, aes(x = Species, y = Sepal.Length)) +
-                      geom_boxplot()
-
-#Call these two graphs to view them... right?
-iris_PetalvsSpecies
-iris_SepalvsSpecies                      
+#Plotting Petal length vs Species
+sns.boxplot(x="Species", y="Petal.Length", data=iris)
+sns.boxplot(x="Species", y="Sepal.Length", data=iris)
+plt.show()
 ```
 
 ### Plotting 2 ggplot graphs in the same window
 
-Oh no problem, we cannot visualise these two graphs at the same time! Your first instinct might be to use `par(mfrow=c(1,2))` but that will not work for `ggplot2` graphs. What we need is `gridExtra`
+Oh no! The boxplots seemed to have merged together! This calls for a new way of defining graphs by using subplots!
 
-Install `gridExtra` and load it if you have not:
+We are going to use the `plt.subplots()` function to define our figure size (if needed), and the number of rows and columns we need! Thankfully, `sns.boxplot()` takes in an argument of `ax = ` as well, allowing us to specify which `ax` is for which box!
 
-```R
-install.packages('gridExtra')
-library(gridExtra)
-```
+The `fig.suptitle()` allows us to define the biggest title for these graphs while `.set(title='')` allows us to define the title for each graph!
 
-Then displaying the graphs is as simple as 1 line of code:
-```R
-grid.arrange(iris_PetalvsSpecies,iris_SepalvsSpecies,ncol=2)
-#There are fancier ways of arranging your graphs using grid.arrange() using matrices
-#But I will not be covering it here as it will take very long
+```Python
+#Plotting these two boxplots together in 1 graph
+fig, ax = plt.subplots(figsize=(10,12), nrows = 2, ncols = 2)
+ax1, ax2 = ax.ravel()
+
+
+fig.suptitle('Length of Petals (cm) vs Species of various $\it{Iris}$ flowers')
+sns.boxplot(x="Species", y="Petal.Length", data=iris, ax = ax1).set(title = 'This is ax1')
+sns.boxplot(x="Species", y="Sepal.Length", data=iris, ax = ax2).set(title = 'This is ax2')
+sns.boxplot(x="Species", y="Petal.Length", data=iris, ax = ax3).set(title = 'This is ax3')
+sns.boxplot(x="Species", y="Sepal.Length", data=iris, ax = ax4).set(title = 'This is ax4')
+plt.show()
 ```
 ![grid_arrange_boxplots](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PetalvsSpeciesvsSepal.jpg)
 
@@ -329,48 +226,17 @@ From two sections ago, we could see, on average across all species of _Iris_ flo
 
 So, you might be asking, how do we visualise this when we only have x- and y-axis on a graph? The secret lies in the **COLOR** or **SHAPE** of each data point!
 
-Let me show you what I mean, remember our previous code?
 
-```R
-iris_PetalLengthvsSepalLength = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25)) +
-                                xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)') + 
-                                labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris) +
-                                theme(plot.title  = element_text(size=30)) +
-                                theme(plot.subtitle  = element_text(size=20)) +
-                                stat_smooth(method='lm', se = FALSE)
-```
-
-We can add an additional argument in the global `aes()` layer to group all points by species by other **COLOR** or **SHAPE** like so:
-
-```R
-#Grouping by colour
-iris_PLSL_col = ggplot(iris, aes(x=Sepal.Length, y = Petal.Length, col = Species)) +
-                                geom_point() + theme() +
-                                theme(axis.text=element_text(size=20)) + 
-                                theme(axis.title=element_text(size=25)) +
-                                xlab('Length of Sepal (cm)') + ylab('Length of Petal (cm)') + 
-                                labs(title = "Length of Petals (cm) vs Length of Sepals (cm)", subtitle = subtitle_iris) +
-                                theme(plot.title  = element_text(size=30)) +
-                                theme(plot.subtitle  = element_text(size=20)) +
-                                stat_smooth(method='lm', se = FALSE)
-
-#If you would like to group by shape, the argument col can be changed from col to shape.                           
+```Python
+#Grouping
+sns.lmplot(x = 'Sepal.Length',y = 'Petal.Length', hue = 'Species', aspect = 1.5, data = iris).set(title='Length of Petals (cm) vs Length of Sepals (cm)\nof various $\it{Iris}$ flowers')
+plt.xlabel("Length of Sepal (cm)", fontsize = 20)
+plt.ylabel("Length of petal (cm)", fontsize = 20)
+plt.show()                           
 ```
 ![group_by_species](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLSL_col.jpg)
 
-Wow! It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! Thats right, the legend size. Lets fix that real quick
-
-```R
-iris_PLSL_col = iris_PLSL_col + theme(legend.text = element_text(size = 20)) + theme( legend.title = element_text(size = 25))
-#There are other aspects you can tweak for the legend, such as background colour and location!
-
-
-iris_PLSL_col
-```
-![Rescaled_Legend](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLSL_col_legend.jpg)
+Wow! It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! 
 
 Amazing! With this graph, this looks beautiful. At first glance, anyone can immediately understand the following points:
 
@@ -378,29 +244,6 @@ Amazing! With this graph, this looks beautiful. At first glance, anyone can imme
 - Weak association for _I. setosa_ 
 - Strong association for _I. versicolor_ and _I. virginica_
 - _I. virginica_ have the longest Petal and Sepal on average as compared to the other three species
-
-
-### Saving graphs
-
-To save your `ggplot2` graphs, you can use the following command(s):
-```R
-#Where this image will be saved can be found in the directory after running getwd()
-getwd()
-#alternatively, you can set the working directory using setwd()
-setwd('C:\\My\\New\\Directory')
-
-
-iris_PLSL_col
-ggsave('FILE_NAME.jpg', width = 2096, height = 2096, units = 'px', dpi = 300)
-#more detailed options can be seen after running ?ggsave
-```
-
-If however, you are using the `grid.arrange()` function to generate your graph, you would need to utilise the following commands:
-```R
-jpeg("FILE_NAME.jpg",quality = 100,width = 1028, height = 1028, units = "px")
-grid.arrange(ggplot_graph1,ggplot_graph2,ncol=2)
-dev.off()
-```
 
 ### Addtional information
 Do note, that there can be **TOO MUCH** information on a single graph. Generally, representing the data on x- and y- axis and grouping the points accordingly by colour is the maximum I would go for any graph.
