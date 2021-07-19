@@ -168,7 +168,7 @@ plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.show()
 ```
-![Added_stat_smooth_line](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLvsSLLMline.jpg)
+![Added_stat_smooth_lineP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/scatterWithLabeland%20linreg.png)
 
 Let us compare with our base graph from earlier to the one we have now!
 
