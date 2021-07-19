@@ -136,7 +136,7 @@ plt.show()
 - [x] Label size for the numbers
 - [x] Naming of X- and Y-axis
 - [ ] Title / subtitle
-- [ ] 
+
 Now with one look, readers can get an idea of what the graph is about. But to make it even clearer, we will need to add a title to the graph:
 
 ```python
@@ -238,14 +238,14 @@ plt.show()
 ```
 ![group_by_speciesP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/grouping.png)
 
-Wow! It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! 
+It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! 
 
-Amazing! With this graph, this looks beautiful. At first glance, anyone can immediately understand the following points:
+We are done! With a quick glance, anyone can immediately understand the following points:
 
 - Each species of _Iris_ flower, the `Petal Length` and `Sepal Length` are positively associated
 - Weak association for _I. setosa_ 
 - Strong association for _I. versicolor_ and _I. virginica_
-- _I. virginica_ have the longest Petal and Sepal on average as compared to the other three species
+- _I. virginica_ have the longest Petal and Sepal on average as compared to the other three species.
 
 ### Addtional information
 Do note, that there can be **TOO MUCH** information on a single graph. Generally, representing the data on x- and y- axis and grouping the points accordingly by colour is the maximum I would go for any graph.
@@ -260,11 +260,13 @@ To illustrate this point, I added another grouping factor of `Sepal.Width` for c
 ![bad_too_much_sepal_width](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLSL_col_bad.jpg)
 
 
-On first glance, you cannot instantly tell many information. This example serves to show that "more isn't always better" and that the way the data is presented would aid in the readability of your point.
+With only a quick glance, you cannot tell much. This example serves to show that "more isn't always better" and that the way the data is presented would aid in the readability of your point.
 
 Now, this is a really exagerrated example of what **NOT** to do...
+
+
 ![Why_Did_I_do_dis](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLSL_col_ascinine.jpg)
 
-Theres just too much text / useless information which could have been in a table and it distracts the reader from the main point of the graph...
+Theres just too much text / useless information which could have been in a table and it distracts the reader from the main point of the graph, notwithstanding the overlapping of text affecting readability...
 
 # End
