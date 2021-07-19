@@ -11,7 +11,7 @@ sort: 1
 
 # Loading in iris dataset
 
-For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper _The use of multiple measurements in taxonomic problems_.
+For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper [_The use of multiple measurements in taxonomic problems_.](https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x).
 
 We can try loading in this built-in dataset in R. Like so:
 
