@@ -64,7 +64,7 @@ Perhaps you have this dataset, you think `Sepal.Length` and `Petal.Width` are re
 plt.plot(iris['Sepal.Length'],iris['Petal.Width'], '.')
 plt.show()
 ```
-![SLvsPw](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/irisSepalvsPetal.jpg)
+![SLvsPwP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/SLPWBlank.png)
 
 Awesome! There seems to be some sort of association. What if we want to explore other combinations of our variables, such as `Sepal.Length` vs `Petal.Length` and so on and so forth? Luckily for us Python's `seaborn` has a function called `sns.pairplot()` to help us! 
 
@@ -72,7 +72,7 @@ Awesome! There seems to be some sort of association. What if we want to explore 
 sns.pairplot(iris)
 plt.show()
 ``` 
-![irisPairsPlot](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/pairsiris.jpg)
+![irisPairsPlotP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/pairplot.png)
 
 It seems that `Petal.Length` and `Petal.Width` has the strongest positive association from each other. This is to be expected as we would expect a flower with a longer petal length to have a longer petal width as well.
 
@@ -89,7 +89,7 @@ After data collection, we can casually plot `Sepal.Length` against `Petal.Length
 plt.plot(iris['Sepal.Length'],iris['Petal.Length'], '.')
 plt.show()
 ```
-![SLvsPL](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/irisSepalLvsPetalL.jpg)
+![SLvsPLP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/SLPLBlank.png)
 
 It seems to me that Petal Length and Sepal Length have a linear positive correlation with each other!
 
@@ -106,7 +106,7 @@ sns.set_theme(style="darkgrid") #This just makes the graph dark and shiny
 sns.scatterplot(x = 'Sepal.Length',y = 'Petal.Length', data = iris)
 plt.show()
 ```
-![geompointExample](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PetalLengthvsSepalLength.jpg)
+![geompointExampleP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/slvsplscatter.png)
 
 
 Great, this is the exact same graph as above. Except this has **COLOUR**. There are a few things we can do to make this graph look more presentable.
@@ -127,7 +127,7 @@ plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.show()
 ```
-![Change_Label_Size](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/PLvsSLChangeSize.jpg)
+![Change_Label_SizeP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/scatterWithLabel%20and%20Fontsize.png)
 
 
 `plt.xticks(fontsize = 15)` and `plt.yticks(fontsize = 15)` changes the numbers on the x- and y-axis whereas `plt.xlabel("Length of Sepal (cm)", fontsize = 20)` and `plt.ylabel("Length of petal (cm)", fontsize = 20)` changes the size and name of the x- and y-axis labels!
@@ -147,7 +147,7 @@ plt.xticks(fontsize = 15)
 plt.yticks(fontsize = 15)
 plt.show()
 ```
-![Added_TitlenSubtitle](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLvsSLTitle.jpg)
+![Added_TitlenSubtitleP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/scatterWithLabel%20and%20Title.png)
 
 The code snippet `.set(title='Length of Petals (cm) vs Length of Sepals (cm))` allows each individual graph to have their own titles! and the snippet `\nof various $\it{Iris}$ flowers'` allows for a new line, and in that new line, italacise the word _Iris_ using `$\it{Iris}$`.
 
@@ -172,7 +172,7 @@ plt.show()
 
 Let us compare with our base graph from earlier to the one we have now!
 
-![comparison_base_ggplot](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/comparisonggplotbase.png)
+![comparison_base_ggplot](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/scatterWithLabeland%20linreg.png)
 
 Awesome! With one look, readers can tell exactly what they are looking at and what message you would want them to takeaway! In this case, as `Sepal Length` increases, `Petal Length` increases. 
 
@@ -186,7 +186,7 @@ So, if our research question was to investigate the `Sepal.Length` and `Petal.Le
 One of the ways to visualise continous variables against categorical variables, is to use a boxplot.
 
 For the sake of simplicity of the tutorial, I would not be changing much of the aesthetics such as label size, label names, tile, etc.
-```R
+```python
 #Plotting Petal length vs Species
 sns.boxplot(x="Species", y="Petal.Length", data=iris)
 sns.boxplot(x="Species", y="Sepal.Length", data=iris)
@@ -194,6 +194,8 @@ plt.show()
 ```
 
 ### Plotting 2 ggplot graphs in the same window
+
+![mergedboxplotP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/mergedbox.png)
 
 Oh no! The boxplots seemed to have merged together! This calls for a new way of defining graphs by using subplots!
 
@@ -214,7 +216,7 @@ sns.boxplot(x="Species", y="Petal.Length", data=iris, ax = ax3).set(title = 'Thi
 sns.boxplot(x="Species", y="Sepal.Length", data=iris, ax = ax4).set(title = 'This is ax4')
 plt.show()
 ```
-![grid_arrange_boxplots](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PetalvsSpeciesvsSepal.jpg)
+![grid_arrange_boxplotsP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/axis4plot.png)
 
 It is clear that there is some form of association between both `Sepal.Length` and `Petal.Length` and `Species`, with _I. virginicca_ having the longest `Petal.Length` and `Sepal.Length` and _I. Setosa_ having the shortest.
 
@@ -234,7 +236,7 @@ plt.xlabel("Length of Sepal (cm)", fontsize = 20)
 plt.ylabel("Length of petal (cm)", fontsize = 20)
 plt.show()                           
 ```
-![group_by_species](https://raw.githubusercontent.com/nus-sps/workshops-R/main/assets/images/iris_PLSL_col.jpg)
+![group_by_speciesP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/grouping.png)
 
 Wow! It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! 
 
