@@ -427,3 +427,60 @@ Now, this is a really exagerrated example of what **NOT** to do...
 Theres just too much text / useless information which could have been in a table and it distracts the reader from the main point of the graph, notwithstanding the overlapping of text affecting readability.
 
 # End
+
+
+```R
+library(MASS)
+library(ggplot2)
+
+birthwt_hist = ggplot(birthwt, aes(x=bwt)) + 
+           geom_histogram(fill="white", colour="black") +
+           facet_grid(smoke ~ .)+ theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
+           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           theme(plot.title  = element_text(size=30)) +
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(strip.text = element_text(size = 20))
+birthwt_hist
+ggsave('birthwt_hist.jpg', width = 2096, height = 2096, units = 'px', dpi = 150)
+
+
+#What if we want to change the axis using facet_grid? We can do the following
+head(birthwt)
+birthwt$smokeR = factor(birthwt$smoke, c('0','1'), c('No Smoke', 'Smoke'))
+
+birthwt_histR = ggplot(birthwt, aes(x=bwt)) + 
+           geom_histogram(fill="white", colour="black") +
+           facet_grid(smokeR ~ .)+ theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
+           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           theme(plot.title  = element_text(size=30)) +
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(strip.text = element_text(size = 20))
+
+birthwt_histR
+ggsave('birthwt_histR.jpg', width = 2096, height = 2096, units = 'px', dpi = 150)
+
+#Alternatively, 
+birthwt_histc = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
+geom_histogram(position="identity", alpha=0.4)+ theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
+           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           theme(plot.title  = element_text(size=30)) +
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(strip.text = element_text(size = 20))+
+           theme(legend.text = element_text(size = 20)) + 
+           theme(legend.title = element_text(size = 25))+ labs(fill='Smoking Status') + 
+           theme(legend.position = c(0.9, 0.9))+
+           theme(legend.background=element_blank())
+
+
+birthwt_histc
+
+```
