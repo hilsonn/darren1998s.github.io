@@ -22,7 +22,7 @@ import seaborn as sns
 
 For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper [_The use of multiple measurements in taxonomic problems_.](https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x)
 
-There are various ways of loading in the iris dataset in python, but let us load in our own csv file to simulate using our own data, using _Pandas_.
+There are various ways of loading in the iris dataset in python, but let us load in our own csv file to simulate using our own data, using `Pandas`.
 
 ```python
 #I hosted the same dataset exported from R onto my github for easy access
@@ -48,7 +48,7 @@ print(iris)
 | 6  | 5.4           | 3.9          | 1.7           | 0.4          | setosa   |
 
 
-The next step in exploring datasets is to know and understand what the different variables are referring to, such as Sepal Length, Sepal Width, Petal Lengths and Petal Width!
+The next step in exploring datasets is to know and understand what the dif.ferent variables are referring to, such as Sepal Length, Sepal Width, Petal Lengths and Petal Width!
 
 ### Optional Information
 The dataset numbers are all in centimeters (cm), and the different variables should look foreign to people not well versed in plant morphology. Luckily for us, since this is a well-known dataset, the internet has graphics explaining what they are.
@@ -57,7 +57,7 @@ The dataset numbers are all in centimeters (cm), and the different variables sho
 How handy! [This website](https://subscription.packtpub.com/book/big_data_and_business_intelligence/9781789539462/3/ch03lvl1sec17/text-classification) contains an image on what Sepal / Petal length and widths mean for each row!
 
 ## Testing a hypothesis
-WIth this dataset, a hypothesis that we could reasonably come up with is that `Sepal.Length` and `Petal.Width` are related in someway. We can visualise this quickly by using the `plt.plot()` function from `matplotlib`, which we abbreviated as `plt`:
+With this dataset, a hypothesis that we could reasonably come up with is that `Sepal.Length` and `Petal.Width` are related in someway. We can visualise this quickly by using the `plt.plot()` function from `matplotlib`, which we abbreviated as `plt`:
 
 ```python
 plt.plot(iris['Sepal.Length'],iris['Petal.Width'], '.')
@@ -66,7 +66,10 @@ plt.show()
 ![SLvsPwP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/SLPWBlank.png)
 
 Despite how succint those lines are, there's a lot going in implicitly, so let's take a closer look:
-`plt.plot` takes in many arguments, but 2 are necessary for a meaningful plot: *the x and y values*. The arguments must either be provided in that order (x then y, as shown in our example here) or explicitly defined as `x = iris['Sepal.Length'], y= iris['Petal.Width']` in the brackets. Secondly, the `'.'` that follows is a short *keyword argument* that tells `matplotlib` what marker to use; the full stop punctuation is a shorthand representation for the dots you see in the graph. If omitted, `plt.plot` defaults to whatever runtime configuration it is currently running.
+
+1. `plt.plot` takes in many arguments, but 2 are necessary for a meaningful plot: *the x and y values*. The arguments must either be provided in that order (x then y, as shown in our example here) or explicitly defined as `x = iris['Sepal.Length'], y= iris['Petal.Width']` in the brackets. 
+2. Secondly, the `'.'` that follows is a short *keyword argument* that tells `matplotlib` what marker to use; the full stop punctuation is a shorthand representation for the dots you see in the graph. If omitted, `plt.plot` defaults to whatever runtime configuration it is currently running.
+
 Awesome! There seems to be some sort of association. What if we want to explore other combinations of our variables, such as `Sepal.Length` vs `Petal.Length` or others? Luckily for us Python's `seaborn` which we abbreviated as `sns` has a function called `pairplot()` to help us.
 
 ```python
@@ -238,7 +241,7 @@ plt.show()
 ```
 ![group_by_speciesP](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Python/grouping.png)
 
-It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_. There is one thing left! 
+It seems like all three species of _Iris_ are positively associated. With red being _I. Setosa_, green being _I. Versicolor_ and blue being _I. virginica_.
 
 We are done! With a quick glance, anyone can immediately understand the following points:
 
