@@ -325,7 +325,7 @@ It is clear that there is some form of association between both `Sepal.Length` a
 
 how do we combine all these information together into a single graph?
 
-## Visualising a continuous variable vs continous variable grouped by categorical variable data
+## Using colours to group data points
 
 From two sections ago, we could see, on average across all species of _Iris_ flowers, `Sepal.Length` is positively associated with `Petal.Length`. However, we have to be careful with this conclusion as it is prone to **ecological fallacy**. As we are making conclusions on a group and we might conclude this same trend **within** each species of _Iris_ flowers.
 
