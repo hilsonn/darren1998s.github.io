@@ -11,7 +11,9 @@ sort: 1
 
 # Section 1: Scatterplots, Boxplots and Grouping by Colour
 
-## Loading in iris dataset
+## Scatterplot & Pair plots
+
+### Loading in iris dataset
 
 For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper [_The use of multiple measurements in taxonomic problems_.](https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x)
 
@@ -21,7 +23,7 @@ We can try loading in this built-in dataset in R. Like so:
 data("iris")
 ```
 
-## Inspecting the dataset
+### Inspecting the dataset
 This dataset contains Sepal and Petal length / width of different Species of flowers _Iris setosa_, _versicolor_, and _virginica_.
 
 We can take a peek at the dataset like this:
@@ -48,7 +50,7 @@ The dataset numbers are all in centimeters (cm), and the different variables sho
 
 How handy! [This website](https://subscription.packtpub.com/book/big_data_and_business_intelligence/9781789539462/3/ch03lvl1sec17/text-classification) contains an image on what Sepal / Petal length and widths mean for each row!
 
-## Testing a hypothesis
+## Pairs plot: Testing a hypothesis
 With this dataset, a hypothesis that we could reasonably come up with is that `Sepal.Length` and `Petal.Width` are related in someway. We can visualise this quickly by using the `plot()` function:
 
 ```R
@@ -71,7 +73,7 @@ It seems that `Petal.Length` and `Petal.Width` has the strongest positive associ
 
 It also seems that `Sepal.Length` and `Petal.Length` have some sort of correlation as well. Lets use these two variables for our examples later!
 
-## Solidifying our research question
+### Solidifying our research question
 Before we proceed any further, it is important in any experiment that we have a solid research question in mind. This is because the type of data presented will help answer your research question. 
 
 Lets say we had a basic research question "Are the lengths of the petals associated with the lengths of sepal in _I. setosa_, _I. versicolor_, and _I. virginica_?" So while we're doing data collection, we collected many other variables as well (see table above).
@@ -81,7 +83,7 @@ After data collection, we can plot `Sepal.Length` against `Petal.Length`.
 
 It seems that Petal Length and Sepal Length do have a linear positive correlation with each other!
 
-## Beautifying the graphs
+## ggplot2: Scatterplot & Trendlines
 
 If you were Ronald Fisher and wanted to present about the positive correlation of Sepal Length with Petal Length by using the graph presented above, you will probably not succeed in getting your point across.
 
@@ -277,7 +279,9 @@ iris_withlm = ggplot(iris.predict, aes(x=Sepal.Length, y = Petal.Length))+
 iris_withlm
 ```
 
-## Visualising Categorical Variables
+## Boxplots
+
+### Visualising Categorical Variables
 In the previous section, both variables shown are continuous variables, which means they can be any continuous value, like numbers. What if one of the variables is categorical, like `Species`?
 
 In the `pairs()` plot that is provided all the way to the top, you would notice that the `Species` of _Iris_ has some form of correlation with both `Sepal.Length` and `Petal.Length`.
@@ -329,7 +333,7 @@ However, the actual numbers are unknown and **ONLY** the general trend can be se
 
 So, how do we combine all these information together into a single graph?
 
-## Using colours to group data points
+## Scatterplot: Grouping by Colour
 
 From two sections ago, we could see, on average across all species of _Iris_ flowers, `Sepal.Length` is positively associated with `Petal.Length`. However, we have to be careful with this conclusion as it is prone to **ecological fallacy**. As we are making conclusions on a group and we might conclude this same trend **within** each species of _Iris_ flowers.
 
@@ -414,7 +418,7 @@ Do note, that there can be **TOO MUCH** information on a single graph. Generally
 If I would want to explore another variable that I have collected, I would generate another graph at that point.
 
 
-#### Bad examples of graphs
+### Bad examples of graphs
 
 To illustrate this point, I added another grouping factor of `Sepal.Width` for colour and shifted `Species` to shape.
 
@@ -434,7 +438,9 @@ Theres just too much text / useless information which could have been in a table
 
 In this section, I am going to attempt to visualise data from the `birthwt` dataset, which was collected at Baystate Medical Center, Springfield, Mass in 1986.
 
-## Loading in birthwt dataset from MASS
+## Histograms
+
+### Loading in birthwt dataset from MASS
 
 This particular dataset can be found in `MASS` package and we can load it in like so
 ```R
@@ -469,7 +475,7 @@ According to the [R documentation](https://www.rdocumentation.org/packages/MASS/
 ### Solidifying our research question
 Just like in the previous section, it is important in any experiment that we have a solid question in mind. For the sake of showcasing histograms and grouped histograms, we can have a basic research question of "Are the birth weight (g) `bwt` of babies affected by the smoking status of mothers during pregnancy `smoke`?"
 
-## Grouped Histograms
+## Facet_grid: Grouped Histograms
 
 Hence, our two desired variables are `bwt` and `smoke`. Since we have already gone through boxplots showing general trends, we are going to make use of grouped histograms to show more numbers.
 
@@ -530,7 +536,7 @@ birthwt_histR = ggplot(birthwt, aes(x=bwt)) +
 
 This is much clearer now!
 
-## Overlaying histograms using colour
+## Histograms: grouping with colours
 
 What if the comparison of using a grouped histogram is not that obvious? It might be better to put them all in the same axis and use colour to separate the two. In this case, we would need to make some adjustments.
 
@@ -568,6 +574,8 @@ birthwt_histc
 ```
 
 ![birthwt_histc](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc.jpg)
+
+### Histogram Presentations: Colour Selection / Focusing
 
 In presentations, sometimes you would need to highlight different groups in this histogram, we are going to look at the function `scale_fill_manual()` to do so!
 
