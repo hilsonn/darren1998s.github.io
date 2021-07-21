@@ -571,7 +571,7 @@ birthwt_histc
 
 In presentations, sometimes you would need to highlight different groups in this histogram, we are going to look at the function `scale_fill_manual()` to do so!
 
-The function `scale_fill_manual()` accepts many argument, one of them is `values`. In the code snippet below, we set `No Smoke` to the familiar red using HTML color code, and set `Smoke` to grey.
+The function `scale_fill_manual()` accepts many argument, one of them is `values`. In the code snippet below, we set `No Smoke` to the familiar red using HTML color code, and set `Smoke` to grey:
 
 ```R
 birthwt_histc1 = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
@@ -607,7 +607,7 @@ birthwt_histc1
 
 This way, we can highlight just the Non-Smokers!
 
-Likewise, if we want to highlight the Smokers,
+Likewise, if we want to highlight the Smokers, we can change the `scale_fill_manual()` to `scale_fill_manual(values=c("#grey", "#00BFC4"))`:
 
 ```R
 birthwt_histc2 = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
