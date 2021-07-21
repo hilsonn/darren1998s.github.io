@@ -557,4 +557,74 @@ birthwt_histc
 
 ![birthwt_histc](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc.jpg)
 
-This is just the bare minimum to plotting histogram, addition of the mean line for each treatment group (`SmokeR`) would aid and can be done using `geom_vline()` and is trivial and can be left as an exercise to the reader.
+In presentations, sometimes you would need to highlight different groups in this histogram, we are going to look at the function `scale_fill_manual()` to do so!
+
+The function `scale_fill_manual()` accepts many argument, one of them is `values`. In the code snippet below, we set `No Smoke` to the familiar red using HTML color code, and set `Smoke` to grey.
+
+```R
+birthwt_histc1 = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
+geom_histogram(position="dodge", alpha=0.4)+ 
+
+           scale_fill_manual(values=c("#F8766D", "grey"))+       
+           #Making the graph look nice.
+           theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
+           labs(title = "Frequency of Baby Birth Weight (g) vs Smokers and Non-smokers") +
+           theme(plot.title  = element_text(size=30)) +
+
+           #Changing the aesthetics of the legend
+           theme(legend.text = element_text(size = 20)) + 
+           theme(legend.title = element_text(size = 25))+ 
+
+           #Changing the legend title from 'SmokeR' to 'Smoking Status'
+           labs(fill='Smoking Status') + 
+
+           #Specifying the position of the legend to the top right
+           theme(legend.position = c(0.9, 0.9))+
+           
+           #Removing the legend background from the original white rectangle.
+           theme(legend.background=element_blank())
+
+
+birthwt_histc1
+```
+
+![birthwt_histc1](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc1.jpg)
+
+This way, we can highlight just the Non-Smokers!
+
+Likewise, if we want to highlight the Smokers,
+
+```R
+birthwt_histc2 = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
+geom_histogram(position="dodge", alpha=0.4)+ 
+
+           scale_fill_manual(values=c("#grey", "#00BFC4"))+       
+           #Making the graph look nice.
+           theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
+           labs(title = "Frequency of Baby Birth Weight (g) vs Smokers and Non-smokers") +
+           theme(plot.title  = element_text(size=30)) +
+
+           #Changing the aesthetics of the legend
+           theme(legend.text = element_text(size = 20)) + 
+           theme(legend.title = element_text(size = 25))+ 
+
+           #Changing the legend title from 'SmokeR' to 'Smoking Status'
+           labs(fill='Smoking Status') + 
+
+           #Specifying the position of the legend to the top right
+           theme(legend.position = c(0.9, 0.9))+
+           
+           #Removing the legend background from the original white rectangle.
+           theme(legend.background=element_blank())
+
+
+birthwt_histc2
+```
+
+![birthwt_histc1](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc2.jpg)
