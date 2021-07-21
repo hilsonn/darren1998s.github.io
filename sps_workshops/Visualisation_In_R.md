@@ -501,7 +501,19 @@ However, while presenting data, the levels of `0` and `1` may not be highly intu
 We would first need to add a new column `SmokeR` to help us rename `0` and `1` using the `factor()` function. The first argument takes in the column which R wants to use, the second argument of `c('0','1')` takes in the levels you want to change and lastly, the third argument takes in a vector to which to rename `0` and `1` in that order.
 ```R
 birthwt$smokeR = factor(birthwt$smoke, c('0','1'), c('No Smoke', 'Smoke'))
+head(birthwt)
+```
 
+|  | low | age | lwt | race | smoke | ptl | ht | ui | ftv | bwt| smokeR |
+|--| --- | --- | --- | ---- | ----- | --- | -- | -- | --  | -- | ------ |
+| 85  | 0| 19  | 182 | 2    |   0   |     0 | 0  |1   |0    |2523| No Smoke |
+| 86  | 0| 33  | 155 | 3    |   0   |     0 | 0  |0   |3    |2551| No Smoke |
+| 87  | 0| 20  | 105 | 1    |   1   |     0 | 0  |0   |1    |2557| Smoke |
+| 88  | 0| 21  | 108 | 1    |   1   |     0 | 0  |1   |2    |2594| Smoke |
+| 89  | 0| 18  | 107 | 1    |   1   |     0 | 0  |1   |0    |2600| Smoke |
+| 91  | 0| 21  | 124 | 3    |   0   |     0 | 0  |0   |0    |2622| No Smoke |
+
+```R
 birthwt_histR = ggplot(birthwt, aes(x=bwt)) + 
            geom_histogram(fill="white", colour="black") +
            facet_grid(smokeR ~ .)+ 
