@@ -485,7 +485,7 @@ birthwt_hist = ggplot(birthwt, aes(x=bwt)) +
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
-           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           labs(title = "Frequency of Baby Birth Weight (g) vs Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
            #This is just for changing the text size for grouping
            theme(strip.text = element_text(size = 20))
@@ -510,7 +510,7 @@ birthwt_histR = ggplot(birthwt, aes(x=bwt)) +
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
-           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           labs(title = "Frequency of Baby Birth Weight (g) vs Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
            theme(strip.text = element_text(size = 20))
 ```
@@ -522,12 +522,12 @@ This is much clearer now!
 
 What if the comparison of using a grouped histogram is not that obvious? It might be better to put them all in the same axis and use colour to separate the two. In this case, we would need to make some adjustments.
 
-The important thing to take not of here is while calling the `geom_histogram()` function. We have the `position = 'identity'` here so that histogram overlaps with each other, rather than having a stacked histogram. 
+The important thing to take not of here is while calling the `geom_histogram()` function. We have the `position = 'dodge'` here so that histogram are not overlapping with each other.
 
-Leaving `position` argument out would automatically make the histograms stack ontop of each other. There are other arguments for histograms such as `dodge`.
+Leaving `position` argument out would automatically make the histograms stack ontop of each other. There are other arguments for histograms such as `identity`.
 ```R
 birthwt_histc = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
-geom_histogram(position="identity", alpha=0.4)+ 
+geom_histogram(position="dodge", alpha=0.4)+ 
         
 
            #Making the graph look nice.
@@ -535,7 +535,7 @@ geom_histogram(position="identity", alpha=0.4)+
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
-           labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
+           labs(title = "Frequency of Baby Birth Weight (g) vs Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
 
            #Changing the aesthetics of the legend
