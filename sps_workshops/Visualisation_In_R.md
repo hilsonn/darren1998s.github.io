@@ -640,3 +640,58 @@ birthwt_histc2
 ```
 
 ![birthwt_histc1](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc2.jpg)
+
+## Grouped Bar Charts
+
+Similarly to Section 1, there is a chance that we fall into an **ECOLOGICAL FALLACY**. Hence, we would need to group some of our data together. In our tutorial, we are going to group them by `race` of mothers.
+
+
+Just like our `smoke` variable, the race of the mother are also in `1`, `2` and `3`. We would need to refactor that using `factor()` like before!
+
+```R
+birthwt$raceF = factor(birthwt$race, c('1','2','3'), c('White', 'Black', 'Other'))
+head(birthwt)
+```
+
+|  | low | age | lwt | race | smoke | ptl | ht | ui | ftv | bwt| smokeR     | raceF  |
+|--| --- | --- | --- | ---- | ----- | --- | -- | -- | --  | -- | ------     | ----- |
+| 85  | 0| 19  | 182 | 2    |   0   |     0 | 0  |1   |0    |2523| No Smoke | Black |
+| 86  | 0| 33  | 155 | 3    |   0   |     0 | 0  |0   |3    |2551| No Smoke | Other |
+| 87  | 0| 20  | 105 | 1    |   1   |     0 | 0  |0   |1    |2557| Smoke    | White |
+| 88  | 0| 21  | 108 | 1    |   1   |     0 | 0  |1   |2    |2594| Smoke    | White |
+| 89  | 0| 18  | 107 | 1    |   1   |     0 | 0  |1   |0    |2600| Smoke    | White |
+| 91  | 0| 21  | 124 | 3    |   0   |     0 | 0  |0   |0    |2622| No Smoke | Other |
+
+To plot a barchart, we are going to make use of `geom_bar()`, but first we would need to set our global `aes()` first! In our case, we would want our x-axis to be `raceF`, y-axis to be birth weight in grams (bwt) and to group the barcharts together we can assign `smokeR` to `fill`.
+
+> Editor note: the `stat` in `geom_bar()` has to be "identity". `position` argument is the same as `geom_hist()`. `width` argument just changes the width of the bar graph.
+
+```R
+birthwt_bar = ggplot(birthwt, aes(x = raceF, y=bwt, fill=smokeR)) +
+             geom_bar(stat="identity",position="dodge", width = 0.5)+ 
+
+           #Beautifying the graph#
+           theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Race') + ylab('Baby Birth Weight (g)') + 
+           labs(title = "Baby Birth Weight (g) vs Race",  subtitle = 'grouped by Smoking Status') +
+           theme(plot.title  = element_text(size=30)) +
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(strip.text = element_text(size = 20))+
+           theme(legend.text = element_text(size = 20)) + 
+           theme(legend.title = element_text(size = 25))+ labs(fill='Smoking Status') + 
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(legend.position = c(0.9, 0.9))+
+           theme(legend.background=element_blank())
+birthwt_bar
+```
+
+![birthwt_bar](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_bar.jpg)
+
+We are done! With a quick glance, anyone can immediately understand the following points:
+
+- Non-smoking mothers will have the highest baby weight across all races
+- Mothers whose race is 'White' will produce the heaviest baby regardless of their smoking status
+
+> Editor note: Even though you could observe such things in a graph, proper statistical testing needs to be done to conclude if  the differences are significant!
