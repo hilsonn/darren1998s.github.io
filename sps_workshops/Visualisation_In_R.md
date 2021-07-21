@@ -9,7 +9,9 @@ sort: 1
 
 **About this tutorial**: Just a small little worked example of what one can do to visualise data so people can apply it to their reports / papers / presentations etc. This is by no means an exhaustive list and I am sure there are better ways to go about doing it :))
 
-# Loading in iris dataset
+# Section 1: Scatterplots, Boxplots and Grouping by Colour
+
+## Loading in iris dataset
 
 For the purposes of this tutorial, we are going to be using the _Iris_ flower dataset introduced by Ronald Fisher in his 1936 paper [_The use of multiple measurements in taxonomic problems_.](https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x)
 
@@ -323,7 +325,9 @@ grid.arrange(iris_PetalvsSpecies,iris_SepalvsSpecies,ncol=2)
 
 It is clear that there is some form of association between both `Sepal.Length` and `Petal.Length` and `Species`, with _I. virginicca_ having the longest `Petal.Length` and `Sepal.Length` and _I. Setosa_ having the shortest.
 
-how do we combine all these information together into a single graph?
+However, the actual numbers are unknown and **ONLY** the general trend can be seen!
+
+So, how do we combine all these information together into a single graph?
 
 ## Using colours to group data points
 
@@ -426,61 +430,131 @@ Now, this is a really exagerrated example of what **NOT** to do...
 
 Theres just too much text / useless information which could have been in a table and it distracts the reader from the main point of the graph, notwithstanding the overlapping of text affecting readability.
 
-# End
+# Section 2: Histograms, Barplots and Grouping by Types
 
+In this section, I am going to attempt to visualise data from the `birthwt` dataset, which was collected at Baystate Medical Center, Springfield, Mass in 1986.
 
+## Loading in birthwt dataset from MASS
+
+This particular dataset can be found in `MASS` package and we can load it in like so
 ```R
 library(MASS)
-library(ggplot2)
+head(birthwt)
+```
 
+|  | low | age | lwt | race | smoke | ptl | ht | ui | ftv | bwt|
+|--| --- | --- | --- | ---- | ----- | --- | -- | -- | --  | -- |
+| 85  | 0| 19  | 182 | 2    |   0   |     0 | 0  |1   |0    |2523|
+| 86  | 0| 33  | 155 | 3    |   0   |     0 | 0  |0   |3    |2551|
+| 87  | 0| 20  | 105 | 1    |   1   |     0 | 0  |0   |1    |2557|
+| 88  | 0| 21  | 108 | 1    |   1   |     0 | 0  |1   |2    |2594|
+| 89  | 0| 18  | 107 | 1    |   1   |     0 | 0  |1   |0    |2600|
+| 91  | 0| 21  | 124 | 3    |   0   |     0 | 0  |0   |0    |2622|
+
+### Optional Information
+
+According to the [R documentation](https://www.rdocumentation.org/packages/MASS/versions/7.3-54/topics/birthwt), these are what the variables represent:
+
+- `low` indicator of birth weight less than 2.5 kg.
+- `age` mother's age in years.
+- `lwt` mother's weight in pounds at last menstrual period.
+- `race` mother's race (1 = white, 2 = black, 3 = other).
+- `smoke` smoking status during pregnancy (0 = not smoking, 1 = smoking).
+- `ptl` number of previous premature labours.
+- `ht` history of hypertension.
+- `ui` presence of uterine irritability.
+- `ftv` number of physician visits during the first trimester.
+- `bwt` birth weight in grams.
+
+### Solidifying our research question
+Just like in the previous section, it is important in any experiment that we have a solid question in mind. For the sake of showcasing histograms and grouped histograms, we can have a basic research question of "Are the birth weight (g) `bwt` of babies affected by the smoking status of mothers during pregnancy `smoke`?"
+
+## Grouped Histograms
+
+Hence, our two desired variables are `bwt` and `smoke`. Since we have already gone through boxplots showing general trends, we are going to make use of grouped histograms to show more numbers.
+
+This is done by utilising the `facet_grid()` function in ggplot
+
+```R
 birthwt_hist = ggplot(birthwt, aes(x=bwt)) + 
            geom_histogram(fill="white", colour="black") +
-           facet_grid(smoke ~ .)+ theme() +
+           facet_grid(smoke ~ .) + 
+
+           #This is just for making the graph look nice!
+           theme() +
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
            labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
-           theme(plot.subtitle  = element_text(size=20))+
+           #This is just for changing the text size for grouping
            theme(strip.text = element_text(size = 20))
 birthwt_hist
-ggsave('birthwt_hist.jpg', width = 2096, height = 2096, units = 'px', dpi = 150)
+```
 
+![birthwt_hist](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_hist.jpg)
 
-#What if we want to change the axis using facet_grid? We can do the following
-head(birthwt)
+Now that we have a basic histogram, we can roughly tell that the baby birth weight (g) (`bwt`) is higher when mothers are not smoking (`smoke = 0`). 
+
+However, while presenting data, the levels of `0` and `1` may not be highly intuitive for readers. Hence, we would need to change it.
+
+We would first need to add a new column `SmokeR` to help us rename `0` and `1` using the `factor()` function. The first argument takes in the column which R wants to use, the second argument of `c('0','1')` takes in the levels you want to change and lastly, the third argument takes in a vector to which to rename `0` and `1` in that order.
+```R
 birthwt$smokeR = factor(birthwt$smoke, c('0','1'), c('No Smoke', 'Smoke'))
 
 birthwt_histR = ggplot(birthwt, aes(x=bwt)) + 
            geom_histogram(fill="white", colour="black") +
-           facet_grid(smokeR ~ .)+ theme() +
+           facet_grid(smokeR ~ .)+ 
+
+           theme() +
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
            labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
-           theme(plot.subtitle  = element_text(size=20))+
            theme(strip.text = element_text(size = 20))
+```
+![birthwt_histR](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histR.jpg)
 
-birthwt_histR
-ggsave('birthwt_histR.jpg', width = 2096, height = 2096, units = 'px', dpi = 150)
+This is much clearer now!
 
-#Alternatively, 
+## Overlaying histograms using colour
+
+What if the comparison of using a grouped histogram is not that obvious? It might be better to put them all in the same axis and use colour to separate the two. In this case, we would need to make some adjustments.
+
+The important thing to take not of here is while calling the `geom_histogram()` function. We have the `position = 'identity'` here so that histogram overlaps with each other, rather than having a stacked histogram. 
+
+Leaving `position` argument out would automatically make the histograms stack ontop of each other. There are other arguments for histograms such as `dodge`.
+```R
 birthwt_histc = ggplot(birthwt, aes(x=bwt, fill=smokeR)) +
-geom_histogram(position="identity", alpha=0.4)+ theme() +
+geom_histogram(position="identity", alpha=0.4)+ 
+        
+
+           #Making the graph look nice.
+           theme() +
            theme(axis.text=element_text(size=20)) + 
            theme(axis.title=element_text(size=25)) +
            xlab('Baby Birth Weight (g)') + ylab('Frequency') + 
            labs(title = "Frequency of Baby Birth Weight (g) between Smokers and Non-smokers") +
            theme(plot.title  = element_text(size=30)) +
-           theme(plot.subtitle  = element_text(size=20))+
-           theme(strip.text = element_text(size = 20))+
+
+           #Changing the aesthetics of the legend
            theme(legend.text = element_text(size = 20)) + 
-           theme(legend.title = element_text(size = 25))+ labs(fill='Smoking Status') + 
+           theme(legend.title = element_text(size = 25))+ 
+
+           #Changing the legend title from 'SmokeR' to 'Smoking Status'
+           labs(fill='Smoking Status') + 
+
+           #Specifying the position of the legend to the top right
            theme(legend.position = c(0.9, 0.9))+
+           
+           #Removing the legend background from the original white rectangle.
            theme(legend.background=element_blank())
 
 
 birthwt_histc
-
 ```
+
+![birthwt_histc](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_histc.jpg)
+
+This is just the bare minimum to plotting histogram, addition of the mean line for each treatment group (`SmokeR`) would aid and can be done using `geom_vline()` and is trivial and can be left as an exercise to the reader.
