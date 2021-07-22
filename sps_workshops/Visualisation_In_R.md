@@ -83,7 +83,7 @@ After data collection, we can plot `Sepal.Length` against `Petal.Length`.
 
 It seems that Petal Length and Sepal Length do have a linear positive correlation with each other!
 
-## ggplot2: Scatterplot & Trendlines
+## Scatterplot & Trendlines with ggplot2
 
 If you were Ronald Fisher and wanted to present about the positive correlation of Sepal Length with Petal Length by using the graph presented above, you will probably not succeed in getting your point across.
 
@@ -672,11 +672,11 @@ head(birthwt)
 
 To plot a barchart, we are going to make use of `geom_bar()`, but first we would need to set our global `aes()` first! In our case, we would want our x-axis to be `raceF`, y-axis to be birth weight in grams (bwt) and to group the barcharts together we can assign `smokeR` to `fill`.
 
-> Editor note: the `stat` in `geom_bar()` has to be "identity". `position` argument is the same as `geom_hist()`. `width` argument just changes the width of the bar graph.
+> Editor note: the `stat` in `geom_bar()` can either be "identity" or "summary". "identity" is used if the numbers used in the dataframe are the numbers you want displayed on the graph. In our example, we need to use "summary" as we would like to plot the mean birth weight! `position` argument is the same as `geom_hist()`. `width` argument just changes the width of the bar graph.
 
 ```R
 birthwt_bar = ggplot(birthwt, aes(x = raceF, y=bwt, fill=smokeR)) +
-             geom_bar(stat="identity",position="dodge", width = 0.5)+ 
+             geom_bar(stat="summary",position="dodge", width = 0.5, fun = mean)+ 
 
            #Beautifying the graph#
            theme() +
@@ -697,9 +697,67 @@ birthwt_bar
 
 ![birthwt_bar](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_bar.jpg)
 
-We are done! With a quick glance, anyone can immediately understand the following points:
+We are almost done! With a quick glance, anyone can immediately understand the following points:
 
 - Non-smoking mothers will have the highest baby weight across all races
 - Mothers whose race is 'White' will produce the heaviest baby regardless of their smoking status
+
+
+What we are missing now are some errorbars! Luckily for us this [website](http://www.sthda.com/english/wiki/ggplot2-error-bars-quick-start-guide-r-software-and-data-visualization) provided us with a handy code snippet to help us summarise our data nicely!
+
+What we can plot for errorbars are Confidence Intervals (CI), Standard Deviation (sd) or standard error (se). In our tutorial, we are going to define our own standard error function`std()` and use it to plot our errorbars!
+
+```R
+std <- function(x) sd(x)/sqrt(length(x))
+
+data_summary <- function(data, varname, groupnames){
+  require(plyr)
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE), se = std(x[[col]]))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func, varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+ return(data_sum)
+}
+
+#it takes in the dataframe, varname takes in y-axis, groupnames take in a vector of grouping we want, in our case race and smoking status!
+df2 <- data_summary(birthwt, varname="bwt", groupnames=c("raceF", "smokeR"))
+df2
+```
+
+|  | se        | bwt     | smokeR   | raceF |
+|--| --------- | ------- | ---------| ----- |
+| 1| 107.05144 |3428.750 | No Smoke | White |
+| 2| 86.87610  |2826.846 | Smoke    | White |
+| 3| 155.31358 |2854.500 | No Smoke | Black |
+| 4| 201.45504 |2504.000 | Smoke    | Black |
+| 5| 95.64864  |2815.782 | No Smoke | Other |
+| 6| 233.83975 |2757.167 | Smoke    | Other |
+
+Now we can plot, the thing to take note here is the use of `stat='identity'` as our mean is precalculated!
+
+```R
+birthwt_bareb = ggplot(df2 , aes(x = raceF, y=bwt, fill=smokeR)) +
+             geom_bar(stat="identity", position='dodge', width = 0.5)+ 
+            geom_errorbar(aes(ymin=bwt-se, ymax=bwt+se), width=.2, position=position_dodge(.5))+
+
+            #Standard graph aesthetics
+           theme() +
+           theme(axis.text=element_text(size=20)) + 
+           theme(axis.title=element_text(size=25)) +
+           xlab('Race') + ylab('Baby Birth Weight (g)') + 
+           labs(title = "Mean Baby Birth Weight (g) vs Race",  subtitle = 'grouped by Smoking Status') +
+           theme(plot.title  = element_text(size=30)) +
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(strip.text = element_text(size = 20))+
+           theme(legend.text = element_text(size = 20)) + 
+           theme(legend.title = element_text(size = 25))+ labs(fill='Smoking Status') + 
+           theme(plot.subtitle  = element_text(size=20))+
+           theme(legend.position = c(0.9, 0.9))+
+           theme(legend.background=element_blank())
+birthwt_bareb
+```
+
+![birthwt_bareb](https://raw.githubusercontent.com/darren1998s/darren1998s.github.io/main/assets/images/Hist/birthwt_bareb.jpg)
 
 > Editor note: Even though you could observe such things in a graph, proper statistical testing needs to be done to conclude if  the differences are significant!
