@@ -1,4 +1,4 @@
-# When to use what graph
+# Data Visualisation: When to use what graph?
 
 **Authors:** [Darren Teo](https://www.linkedin.com/in/darren-teo-3125871a1/), [Hillson Hung](https://www.linkedin.com/in/hillson-hung/)
 
@@ -8,7 +8,7 @@
 
 ## Different kinds of data
 
-There are three main kinds of data, exclusively numerical, exclusively categorical and a mix of the two. There are many ways to represent numerical data, depending on the number of variables and whether it is ordered in some way or other. On the other hand, exclusively categorical data is usually harder to visualise, especially when there are multiple independent variables. Below is a quick flowchart for which methods of data visualisation to use for the different kinds of data.
+There are three main kinds of data, exclusively numerical, exclusively categorical and a mix of the two. There are many ways to represent numerical data, depending on the number of variables and whether it is ordered in some way or other. On the other hand, exclusively categorical data is usually harder to visualise, especially when there are multiple independent categorical variables. Below is a quick flowchart for which methods of data visualisation to use for the different kinds of data.
 
 ### Exclusively Numerical/Categorical Data Flowchart
 
